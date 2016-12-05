@@ -8,7 +8,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-public class CanvasComponent extends JComponent implements MouseListener, MouseMotionListener
+public class CanvasComponent extends JComponent implements MouseListener, MouseMotionListener, ActionListener
 {
     int rectX;
     int rectY;
@@ -17,6 +17,10 @@ public class CanvasComponent extends JComponent implements MouseListener, MouseM
     int mouseFromX;
     int mouseFromY;
     boolean shapeSelected = false;
+    int animationDeltaX = 1;
+    int animationDeltaY = 0;
+    int gutterX = 10;
+    int gutterY = 10;
 
     public CanvasComponent(int w, int h){
         setSize(w, h);
@@ -32,6 +36,7 @@ public class CanvasComponent extends JComponent implements MouseListener, MouseM
     }
     
     public void mouseClicked(MouseEvent e){
+        
     }
     public void mousePressed(MouseEvent e){
         shapeSelected = false;
@@ -60,5 +65,14 @@ public class CanvasComponent extends JComponent implements MouseListener, MouseM
         }
     }
     public void mouseMoved(MouseEvent e){
+    }
+    public void actionPerformed(ActionEvent e){
+     if(!shapeSelected){
+         Dimension componentSizeDimenstion = getSize();
+         if(rectX + rectWidth + gutterX > componentSizeDimenstion.getWidth()){
+             rectX = (int)componentSizeDimenstion.getWidth() - rectWidth - rectX;
+             rectY += animationDeltaY;
+         }
+     }
     }
 }
